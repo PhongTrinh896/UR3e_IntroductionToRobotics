@@ -3,7 +3,7 @@ import numpy as np
 import mujoco
 
 # Import các hàm từ file mã nguồn kinematics của bạn
-from ur3e_transformation_matrix.Inverse_kinematics import forward_kinematics, inverse_kinematics_dls, ROBOT_PARAMS
+from ur3e_kinematics.Inverse_kinematics import forward_kinematics, inverse_kinematics_dls, ROBOT_PARAMS
 
 # Đường dẫn tới file XML của bạn
 MODEL_PATH = "/home/phongtrinh/mujoco_projects/ur3e_robot_description/ur3e.xml"
