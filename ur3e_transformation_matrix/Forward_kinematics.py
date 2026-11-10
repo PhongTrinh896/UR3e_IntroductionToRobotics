@@ -9,18 +9,18 @@ ROBOT_PARAMS = {
     'd6': 0.0921     # d6 (m)
 }
 
-# DH table
+# =============== DERIVE DH TABLE FROM CONFIGURATION ==============
 def get_dh_table(q, params=ROBOT_PARAMS):
     """
     Joint vector q = [q1, q2, q3, q4, q5, q6] (Radian)
       i |  alpha_i (deg) |   a_i  |   d_i  |    theta_i
      ---|----------------|--------|--------|----------------
-      1 |       90       |    0   |   LB   |      theta1
+      1 |       -90      |    0   |   LB   |      theta1
       2 |        0       |   a2   |    0   |      theta2
       3 |        0       |   a3   |    0   |      theta3
-      4 |       90       |    0   |  -d4   |      theta4
+      4 |       -90      |    0   |   d4   |      theta4
       5 |       90       |    0   |   d5   |      theta5
-      6 |        0       |    0   |   d6   |  theta6 + 180 deg
+      6 |        90      |    0   |   d6   |  theta6 + 180 deg
     """
     LB = params['LB']
     a2 = params['a2']
@@ -43,6 +43,7 @@ def get_dh_table(q, params=ROBOT_PARAMS):
     ]
     return dh_table
 
+# ============= HOMOGENOUS TRANSFORMATION MATRIX FROM DH ==============
 def T_matrix_calc(alpha, a, d, theta):
     ct = np.cos(theta)
     st = np.sin(theta)
@@ -109,6 +110,7 @@ def compute_jacobian(q, params=ROBOT_PARAMS):
 
     return J
 
+# ============ DEBUG FUNCTION ============
 def print_all_transformations(q, params=ROBOT_PARAMS, precision=4):
     """
     Hàm in chi tiết từng ma trận biến đổi A_i và T_0_i cho từng khâu.
@@ -149,6 +151,7 @@ def print_all_transformations(q, params=ROBOT_PARAMS, precision=4):
     return T_cum
 pi = np.pi
 
+""" ============ MAIN FUNCTION =============="""
 if __name__ == "__main__":
     # 1. Khai báo góc khớp kiểm thử (Tính theo Radian)
     # Ví dụ: Thử nghiệm với cấu hình góc [0, -pi/2, pi/2, 0, pi/2, 0]

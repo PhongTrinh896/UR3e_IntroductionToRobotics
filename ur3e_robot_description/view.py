@@ -3,7 +3,14 @@ import mujoco.viewer
 import time
 
 # Load model
-model = mujoco.MjModel.from_xml_path("ur3e.xml")
+import os
+from pathlib import Path
+
+xml_path = Path(__file__).resolve().parent / "ur3e.xml"
+# Change working directory to the XML folder so meshdir (e.g. "assets/") resolves correctly
+os.chdir(xml_path.parent)
+
+model = mujoco.MjModel.from_xml_path(str(xml_path))
 data = mujoco.MjData(model)
 
 print(f"Loaded successfully! Bodies: {model.nbody}, Geoms: {model.ngeom}")
